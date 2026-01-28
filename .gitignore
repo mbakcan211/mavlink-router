@@ -15,3 +15,5 @@ tags
 # Jetbrains IDEs
 .idea/
 compile_commands.json
+modules/mavlink_c_library_v2/
+modules/mavlink_python_library_v2/
