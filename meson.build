@@ -124,7 +124,7 @@ version_h = vcs_tag(input : 'src/version.h.in',
                     command: vcs_tagger)
 
 # Includes
-mavlink_inc = include_directories('modules/mavlink_c_library_v2/ardupilotmega')
+mavlink_inc = include_directories('modules/mavlink_c_library_v2/all')
 src_inc = include_directories('src')
 
 # Additonal data to be installed
