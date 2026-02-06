@@ -1,33 +1,41 @@
 #!/bin/bash
 # Algan-Developer: Build Script for existing MAVLink Router Fork
+# Added: Auto-venv creation and system-safe dependency installation
 
 set -e # Exit immediately if a command exits with a non-zero status
 
-echo "--- Installing Build Dependencies ---"
-# Install essential toolchain components for WSL/Ubuntu
-sudo apt update
-sudo apt install -y pkg-config gcc g++ systemd python3-pip ninja-build
+VENV_DIR=".venv"
 
-# mavlink-router requires meson >= 0.55; pip ensures we have the latest
-sudo apt install -y meson
+echo "--- Installing Build Dependencies ---"
+sudo apt update
+sudo apt install -y pkg-config gcc g++ systemd ninja-build python3-venv
+
+# 1. Create venv if it doesn't exist
+if [ ! -d "$VENV_DIR" ]; then
+    echo "Creating virtual environment in $VENV_DIR..."
+    python3 -m venv "$VENV_DIR"
+fi
+
+# 2. Use the venv's pip to install meson (Avoids PEP 668 error)
+echo "Installing/Updating Meson in virtual environment..."
+$VENV_DIR/bin/pip install --upgrade pip
+$VENV_DIR/bin/pip install meson
 
 echo "--- Updating Internal MAVLink Submodule ---"
-# This ensures your fork has the C-headers required for compilation
-git submodule update --init
+git submodule update --init --recursive
 
 echo "--- Configuring Build Directory ---"
-# Meson requires a separate build directory; we clean it if it already exists
 rm -rf build
-meson setup build . \
+
+# 3. Call meson from the venv specifically
+$VENV_DIR/bin/meson setup build . \
     --buildtype=release \
     -Dsystemdsystemunitdir=/usr/lib/systemd/system
 
 echo "--- Compiling ---"
-# Using Ninja to compile the project
 ninja -C build
 
 echo "--- Installing to System ---"
-# Installs the binary to /usr/local/bin by default
 sudo ninja -C build install
 
 echo "--- Final Verification ---"
