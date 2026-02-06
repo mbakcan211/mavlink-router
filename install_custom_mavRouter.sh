@@ -9,11 +9,11 @@ sudo apt update
 sudo apt install -y pkg-config gcc g++ systemd python3-pip ninja-build
 
 # mavlink-router requires meson >= 0.55; pip ensures we have the latest
-sudo pip3 install meson
+sudo apt install -y meson
 
 echo "--- Updating Internal MAVLink Submodule ---"
 # This ensures your fork has the C-headers required for compilation
-git submodule update --init --recursive
+git submodule update --init
 
 echo "--- Configuring Build Directory ---"
 # Meson requires a separate build directory; we clean it if it already exists
