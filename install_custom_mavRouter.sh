@@ -22,7 +22,7 @@ $VENV_DIR/bin/pip install --upgrade pip
 $VENV_DIR/bin/pip install meson
 
 echo "--- Updating Internal MAVLink Submodule ---"
-git submodule update --init --recursive
+git submodule update --init
 
 echo "--- Configuring Build Directory ---"
 rm -rf build
