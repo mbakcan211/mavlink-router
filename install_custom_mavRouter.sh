@@ -21,6 +21,7 @@ echo "Installing/Updating Meson in virtual environment..."
 $VENV_DIR/bin/pip install --upgrade pip
 $VENV_DIR/bin/pip install meson
 $VENV_DIR/bin/pip install pymavlink lxml
+$VENV_DIR/bin/pip install opencv-python
 
 echo "--- Updating Internal MAVLink Submodule ---"
 git submodule update --init

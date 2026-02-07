@@ -1,3 +1,4 @@
 [submodule "modules/Algan-Mavlink"]
 	path = modules/Algan-Mavlink
 	url = https://github.com/mbakcan211/Algan-Mavlink.git
+	branch=main
