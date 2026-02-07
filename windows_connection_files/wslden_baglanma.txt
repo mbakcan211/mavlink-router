@@ -1,0 +1,17 @@
+---------------------------------
+Mavlink-router kullanabilmek için wsl'in bilgisayarın
+usb portlarına erişebilmesi gerekiyor.
+Bunun için usbpid yazılımı windowsa kurulup aşağıdaki komutlar çalıştırılmalı.
+
+//Windows'a bağlı tüm usb cihazları görmek için
+-> usbipd list 
+
+//Windows'a bağlı usb'yi wsl'e paylaşmak için(administrator yetkisi gerekir.)
+-> usbipd bind --busid [cihaz busid değeri]
+örnek: usbipd bind --busid 4-4
+
+//Usb'yi en son WSL'e bağlamak için
+-> usbipd attach --wsl --busid <busid>
+
+//Wsl'den cihazı kontrol etmek için
+-> lsusb

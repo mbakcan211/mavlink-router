@@ -20,6 +20,7 @@ fi
 echo "Installing/Updating Meson in virtual environment..."
 $VENV_DIR/bin/pip install --upgrade pip
 $VENV_DIR/bin/pip install meson
+$VENV_DIR/bin/pip install pymavlink lxml
 
 echo "--- Updating Internal MAVLink Submodule ---"
 git submodule update --init
@@ -27,6 +28,9 @@ git submodule update --init
 echo "--- Configuring Build Directory ---"
 rm -rf build
 
+cd modules/Algan-Mavlink
+bash ./generate_packets.sh
+cd ../..
 # 3. Call meson from the venv specifically
 $VENV_DIR/bin/meson setup build . \
     --buildtype=release \
